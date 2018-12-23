@@ -1,4 +1,4 @@
-import mongoose from "../../database/db.connect";
+const mongoose = require("../../database/db.connect");
 
 const model = new mongoose.Schema({
     street: {type: String, trim: true, require: true},
@@ -10,4 +10,4 @@ const model = new mongoose.Schema({
     country: {type: String, trim: true, require: true}
 })
 
-export default model;
+module.exports = model;

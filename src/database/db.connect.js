@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
-import env from "../environments/env"
+const mongoose = require("mongoose");
+const env = require("../environments/env");
 
-const url = env.dev.url + env.dev.name;
+const url = "mongodb://localhost:27017/DatabaseMC"
 
 const options = {
     useNewUrlParser: true,
@@ -19,3 +19,4 @@ const options = {
   };
 
 mongoose.connect(url, options);
+module.exports =  mongoose;

@@ -1,6 +1,7 @@
-export default env = {
+module.exports = env = {
     dev: {
         url: "mongodb://localhost:27017",
-        name: "/"
+        name: "/DatabaseMC"
     }
 };
+
