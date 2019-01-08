@@ -9,6 +9,7 @@ app.use(bodyParser.urlencoded({ extended : true })); //entende quando passo para
 
 
 require('./app/routes/client')(app);
+require('./app/routes/provider')(app);
 
 app.listen(port, (err) => {
    err ? console.error(`Err ${err}`) : console.log(` Server listening on port ${port}`)
