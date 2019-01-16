@@ -11,6 +11,8 @@ app.use(bodyParser.urlencoded({ extended : true })); //entende quando passo para
 require('./app/routes/client')(app);
 require('./app/routes/provider')(app);
 require('./app/routes/product')(app);
+require('./app/routes/admin')(app);
+require('./app/routes/login')(app);
 
 
 app.listen(port, (err) => {
