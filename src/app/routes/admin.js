@@ -28,4 +28,29 @@ router.put('/create/admin', async (req, res) => {
     
 })
 
+
+router.post('/update/admin', async (req, res) => {
+
+    try {
+        const { _id, password } = req.body;
+        
+        //verifica se existe um admin com o id passado
+        if( !await adminModel.findById(_id) )
+            return res.status(400).send('Admin não encontrado');//caso nao existe manda msg de erro      
+
+        //gera um hash para senha do usuario
+        var hash = await bcrypt.hashSync(password);
+        req.body.password = hash;
+
+        //localiza e faz update do cliente
+        await adminModel.findOneAndUpdate(_id, { 
+            $set: req.body 
+        })
+        return res.status(200).send('ok')
+    }
+    catch(err){
+
+    }
+})
+
 module.exports = app => app.use('/', router); 
