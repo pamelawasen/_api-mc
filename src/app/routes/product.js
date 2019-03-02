@@ -21,8 +21,24 @@ router.post('/create/product', async (req, res) => {
     }
 })
 
-// Ler Produto Ativo
+// Ler Todos Produto Ativo
 router.post('/read/product', async (req, res) =>{
+
+    try{
+        if( !await productModel.find({deleted:false}))
+        return res.status(400).send('Produtos não encontrados!')
+
+        const product = await productModel.find({deleted:false})
+        return res.status(200).send(product)
+    }
+
+    catch(err){
+
+    }
+})
+
+// Ler Produto Individuais Ativo
+router.post('/readOne/product', async (req, res) =>{
     var {_id} = req.body;
 
     try{
