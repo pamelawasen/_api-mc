@@ -10,9 +10,10 @@ router.post('/create/product', async (req, res) => {
 
     try{
         if( await productModel.findOne({'description': description,'provider':provider}) )
-        return res.status(400).send('Produto já cadastrado!')
+            return res.status(400).send('Produto já cadastrado!')
 
         const product = await productModel.create(req.body);
+
         return res.status(200).send(product);
     }
 

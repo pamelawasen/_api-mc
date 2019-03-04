@@ -7,7 +7,7 @@ const router = express.Router();
 /*
 * Rota para criaçao de um novo fornecedor
 */
-router.put('/create/provider', async (req, res) => {
+router.post('/create/provider', async (req, res) => {
     //desestruturação no req.body
     const { email, cnpj } = req.body;
     
@@ -31,7 +31,7 @@ router.put('/create/provider', async (req, res) => {
 /*
 * Rota para alterar um fornecedor
 */
-router.post('/update/provider', async (req, res) => {
+router.put('/update/provider', async (req, res) => {
     //desestruturação no req.body
     var { _id } = req.body;
     

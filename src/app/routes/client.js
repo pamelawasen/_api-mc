@@ -7,7 +7,7 @@ const router = express.Router();
 /*
 * Rota para criaçao de um novo client
 */
-router.put('/create/client', async (req, res) => {
+router.post('/create/client', async (req, res) => {
     //desestruturação no req.body
     const { email, cpf } = req.body;
     
@@ -31,14 +31,14 @@ router.put('/create/client', async (req, res) => {
 /*
 * Rota para alterar um client
 */
-router.post('/update/client', async (req, res) => {
+router.put('/update/client', async (req, res) => {
     //desestruturação no req.body
     var { _id } = req.body;
     
     try {
         //verifica se existe um usuario com o id passado
         if( !await clientModel.findById(_id) )
-            return res.status(400).send('Usuario não encontrado');//caso nao existe manda msg de erro      
+            return res.status(400).send('Cliente não encontrado');//caso nao existe manda msg de erro      
 
         //localiza e faz update do cliente
         await clientModel.findOneAndUpdate(_id, { 
@@ -53,6 +53,51 @@ router.post('/update/client', async (req, res) => {
     }
 })
 
+
+/*
+* Rota para trazer clientes
+*/
+router.get('/get/client', async (req, res) => {
+    
+    try {
+        const clients = await clientModel.find()
+        if(!clients)
+            return res.status(400).send('Clientes não encontrado');//caso nao existe manda msg de erro      
+
+
+        return res.status(200).send(clients)
+
+    }
+    catch(err){
+        //aqui vamos validar os erros
+
+    }
+})
+
+
+/*
+* Rota para trazer um client com respectivo id
+*/
+router.get('/get/client/:_id', async (req, res) => {
+
+    var { _id } = req.params;
+    
+    try {
+        const client = await clientModel.findById(_id)
+        if(!client)
+            return res.status(400).send('Cliente não encontrado');//caso nao existe manda msg de erro      
+
+
+        return res.status(200).send(client)
+
+    }
+    catch(err){
+        //aqui vamos validar os erros
+
+    }
+})
+
+
 /*
 * Rota para deletar um  client
 */
@@ -61,13 +106,12 @@ router.delete('/delete/client/:_id', async (req, res) => {
     var { _id } = req.params;
     
     try {
-        //verifica se existe um usuario com o id passado
-        if( !await clientModel.findById(_id) )
-            return res.status(400).send('Usuario não encontrado');//caso nao existe manda msg de erro      
+       
+        const client = await clientModel.findByIdAndDelete(_id)
 
-        //localiza e faz delete do cliente
-        await clientModel.findByIdAndDelete(_id)
-        return res.status(200).send('deletado')
+        if(!client)
+            return res.status(400).send('Client não encontrado');//caso nao existe manda msg de erro      
+        return res.status(200).send(`${client.name} deletado`)
 
     }
     catch(err){

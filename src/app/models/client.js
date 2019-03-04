@@ -11,4 +11,4 @@ const model = new mongoose.Schema({
     //address:  addressModel,
 })
 
-module.exports = mongoose.model("user", model); //'user' <= nome da collection no mongo
+module.exports = mongoose.model("client", model); //'client' <= nome da collection no mongo

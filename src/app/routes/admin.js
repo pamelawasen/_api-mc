@@ -4,7 +4,7 @@ const router = express.Router();
 const adminModel = require('../models/admin');
 const bcrypt = require('bcrypt-nodejs');
 
-router.put('/create/admin', async (req, res) => {
+router.post('/create/admin', async (req, res) => {
  
     try {
 
@@ -29,7 +29,7 @@ router.put('/create/admin', async (req, res) => {
 })
 
 
-router.post('/update/admin', async (req, res) => {
+router.put('/update/admin', async (req, res) => {
 
     try {
         const { _id, password } = req.body;
@@ -50,6 +50,61 @@ router.post('/update/admin', async (req, res) => {
     }
     catch(err){
 
+    }
+})
+
+/*
+* Rota para trazer os admins
+ */
+router.get('/get/admin', async(req, res) => {
+    try{
+        
+        const admins = await adminModel.find();
+        if(admins)
+            return res.status(200).send(admins);
+    }   
+    catch(err){
+
+    }
+})
+
+
+/*
+* Rota para trazer o admin com respectivo ID
+ */
+router.get('/get/admin/:_id', async(req, res) => {
+    try{
+        
+        const _id = req.params
+
+        const admin = await adminModel.findById(_id);
+        if(admin)
+            return res.status(200).send(admin);
+    }   
+    catch(err){
+
+    }
+})
+
+
+/*
+* Rota para deletar o admin com respectivo ID
+ */
+router.delete('/delete/admin/:_id', async(req, res) => {
+    try{
+        
+        const _id = req.params
+
+        const admin = await adminModel.findByIdAndDelete(_id);
+        
+        if(!admin)
+            return res.status(404).send('Usuário não encontrado!');    
+
+        return res.status(200).send(`${admin.name} deleted.`);
+    }   
+    catch(err){
+        console.log(err)
+        return res.status(400).send(err);
     }
 })
 
